@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB에 뭐가 들어있게?</title>
+</head>
+<body>
+    <h1> DB에 뭐가 들어있나?</h1>
+    <h2>
+        {% for i in dbData %}
+            {{ i.itemID }} <a href="detail/{{ i.itemID }}">{{ i.itemName }}</a> {{ i.description }} {{ i.price }} {{ i.pirctureURL }}<br>
+        {% endfor %}
+    </h2>
+</body>
+</html>

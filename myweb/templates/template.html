@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>I'm Template</title>
+</head>
+    <body>
+        <h1>안녕하세요?</h1>
+        <h3>제가 약간의 메시지를 적었는데 보실래요?</h3>
+        <br><br>
+        <h4>Data: {{ msg|upper }} msg에 upper 함수를 써봤는데 잘 적용이 되었을까요?</h4>
+        <h4>data라는 변수에 여러 데이터가 들어있는데, 확인하실래요?</h4>
+        <h4>저는 {{ person.name }} 이고, 나이는 {{ person.age }}살 입니다.</h4>
+        <h4>
+            {% if  person.age >= 20 %}
+                {{ person.name }}는 성인이구나
+            {%  else %}
+                    {{ person.name }}는 미성년자구나
+            {% endif %}
+        </h4>
+        <h3>
+            {%  for temp in data %}
+                <li>{{ temp }}</li>
+            {% endfor %}
+        </h3>
+    </body>
+</html>

@@ -22,5 +22,8 @@ urlpatterns = [
     # admin/요청이 오면 admin.site.urls 함수가 처리하겠다고 남김
     path("admin/", admin.site.urls),
     # 기본 요청은 ""이다. 이걸 누가 처리하면 좋을까?
-    path("",views.index) # myweb에 있는 views 모듈의 index 함수가 처리할거야~
+    path("",views.index), # myweb에 있는 views 모듈의 index 함수가 처리할거야~
+    path("template",views.template), # 앞뒤 맞추는게 기억하기 편함
+    path("checkDB",views.checkDB), #얼른 views에다가 checkDB를 만들어주자.
+    path("detail/<str:itemID>", views.detail) #itemID의 자료형을 알아야겠지
 ]
