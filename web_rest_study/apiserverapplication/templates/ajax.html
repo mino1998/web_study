@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My ajax</title>
+</head>
+<body>
+    <div id="display">
+
+    </div>
+    <button id="allbtn">전체 데이터 가져오기</button> <br><br><br>
+    bid : <input type="text" id="bid" /> <button id="getbook">데이터 1개 가져오기</button>
+    <div id="display2"></div>
+</body>
+<script>
+    document.getElementById("allbtn").addEventListener("click",(e)=>{
+        let request=new XMLHttpRequest(); //재정의 안했음
+        // 출력하는 함수에 객체를 대입하면 toString 메서드 호출
+        // python은 __str__ 메서드 호출
+        // 위 메서드를 재정의하면 그 내용이 출력되지만
+        // 재정의를 안하면 기본 설정 내용이 출력됩니다.
+        // alert(request)
+        // 요청 생성하기
+        // request.open('전송방식','url','비동기전송여부')
+        // http://localhost:8000/example/fbv/books
+        //현재는 http://localhost:8000/ajax
+        request.open('GET', '/example/fbv/books',true);
+        // 요청 전송
+        request.send('')
+        // 응답이 오면 호출
+        request.addEventListener('load',(e)=>{
+            // 문자열
+            //alert(request.responseText)
+            // 문자열을 JS 데이터로 변환 (파싱)
+            let data=JSON.parse(request.responseText)
+            // alert(data) // [object]로 print 된다. 즉 객체들의 배열
+            let txt='';
+            for(let item of data){ // in으로 하면idx가 나옴(0,1,2) of는 object
+                txt+='<h3>'+'&lt'+item.title+'&gt'+'</h3>';
+                txt+='<h3>'+'작가 : '+item.author+'</h3>';
+                txt+='<h3>'+'설명 : '+item.description+'</h3>';
+            }
+            document.getElementById('display').innerHTML=txt;
+        });
+    });
+        // 이번에는 id를 입력받아서 하나를 가져오는 것을 만들어보자.
+    document.getElementById("getbook").addEventListener("click",
+        (e)=>{
+            // id가 bid인 입력의 값을 가져오기
+            let bid=document.getElementById('bid').value;
+            //alert(bid);
+            let request=new XMLHttpRequest();
+            request.open('GET','../example/fbv/books/'+bid,true);
+            request.send('');
+            request.addEventListener('load',(e)=>{
+                //없는 bid라면 detail에 NotFound값이 넘어와야 합니다.
+                //alert(request.responseText)
+                let txt="";
+                // 내가 짠 코드는 없는 데이터가 들어오면 " " or "" 상태
+                // trim으로 공백을 없애고 길이를 보자.
+                // 이게 조심해야 하는 점이다.
+                if(request.responseText.trim().length <= 0){
+                    //데이터가 없을 때 처리
+                    txt="<h3>해당 되는 bid가 없습니다.</h3>";
+                }
+                else{
+                    let data=JSON.parse(request.responseText);
+                    //데이터가 있을 때 처리
+                    // alert(data.bid)
+                    txt+="<h3>"+data.bid+"</h3>";
+                    txt+="<h3>"+data.title+"</h3>";
+                    txt+="<h3>"+data.description+"</h3>";
+                }
+                // 안에 태그를 전부 해석해서 disp하기 위해 사용
+                document.getElementById('display2').innerHTML=txt;
+            })
+
+        });
+
+</script>
+</html>
